@@ -43,7 +43,7 @@ head.appendChild(script);
 // Keyboard Shortcuts
 //
 document.onkeyup = function keyUp(e) {
-    if (e.target.tagName == 'TEXTAREA') {
+    if (e.target.tagName == 'TEXTAREA' || e.target.tagName == 'INPUT') {
         return;
     }
 
@@ -160,7 +160,7 @@ document.onkeyup = function keyUp(e) {
 }
 
 document.onkeydown = function keyDown(e) {
-    if (e.target.tagName == 'TEXTAREA') {
+    if (e.target.tagName == 'TEXTAREA' || e.target.tagName == 'INPUT') {
         return;
     }
 

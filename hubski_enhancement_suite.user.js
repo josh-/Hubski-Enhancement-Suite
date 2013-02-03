@@ -7,11 +7,12 @@
 // @author        joshparnham
 // @include       http://hubski.com/*
 // @include       https://hubski.com/*
-// @version       0.2
+// @version       0.1
 // ==/UserScript==
 
 var currentUser = document.getElementsByClassName('leftmaintitle')[0].innerHTML;
 var feedSelectionIndex;
+var backgroundColorOffset = 0x111111;
 
 //
 // Function to get computed style of an element
@@ -208,7 +209,7 @@ if(bgColorAttr=='transparent') { //edge case for the snow hubski-style
 var originalBgColor = colorToHex(bgColorAttr);
 var parsedHexBgColor = originalBgColor.replace("#","");
 parsedHexBgColor = parseInt(parsedHexBgColor, 16);
-var selectBgColor = '#'+((parsedHexBgColor - 0x111111).toString(16));
+var selectBgColor = '#'+((parsedHexBgColor - backgroundColorOffset).toString(16));
 
 
 document.onkeydown = function keyDown(e) {

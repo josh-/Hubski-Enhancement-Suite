@@ -12,6 +12,44 @@
 
 var currentUser = document.getElementsByClassName('leftmaintitle')[0].innerHTML;
 var feedSelectionIndex;
+var backgroundColorOffset = 0x111111;
+
+//
+// Function to get computed style of an element
+// All credit to Robert Nyman
+// http://robertnyman.com/2006/04/24/get-the-rendered-style-of-an-element/
+//
+function getStyle(oElm, strCssRule){
+    var strValue = "";
+    if(document.defaultView && document.defaultView.getComputedStyle){
+        strValue = document.defaultView.getComputedStyle(oElm, "").getPropertyValue(strCssRule);
+    }
+    else if(oElm.currentStyle){
+        strCssRule = strCssRule.replace(/\-(\w)/g, function (strMatch, p1){
+            return p1.toUpperCase();
+        });
+        strValue = oElm.currentStyle[strCssRule];
+    }
+    return strValue;
+}
+
+//
+// Converting RGB color to hex
+// http://haacked.com/archive/2009/12/29/convert-rgb-to-hex.aspx
+//
+function colorToHex(color) {
+    if (color.substr(0, 1) === '#') {
+        return color;
+    }
+    var digits = /(.*?)rgb\((\d+), (\d+), (\d+)\)/.exec(color);
+    
+    var red = parseInt(digits[2]);
+    var green = parseInt(digits[3]);
+    var blue = parseInt(digits[4]);
+    
+    var rgb = blue | (green << 8) | (red << 16);
+    return digits[1] + '#' + rgb.toString(16);
+};
 
 //
 // Never Ending Hubski
@@ -167,6 +205,21 @@ document.onkeyup = function keyUp(e) {
     }
 }
 
+//
+// Calculate appropriate background color for selecting posts
+//
+var bgColorAttr = getStyle(document.getElementsByTagName('body')[0],"background-color");
+
+if(bgColorAttr=='transparent') { //edge case for the snow hubski-style
+    bgColorAttr='rgb(255, 255, 255)';
+}
+
+var originalBgColor = colorToHex(bgColorAttr);
+var parsedHexBgColor = originalBgColor.replace("#","");
+parsedHexBgColor = parseInt(parsedHexBgColor, 16);
+var selectBgColor = '#'+((parsedHexBgColor - backgroundColorOffset).toString(16));
+
+
 document.onkeydown = function keyDown(e) {
     if (e.target.tagName == 'TEXTAREA' || e.target.tagName == 'INPUT') {
         return;
@@ -180,7 +233,7 @@ document.onkeydown = function keyDown(e) {
             document.getElementsByClassName('gridfeed')[0].childNodes[feedSelectionIndex].style.backgroundColor = '';
         }
         feedSelectionIndex++;
-        document.getElementsByClassName('gridfeed')[0].childNodes[feedSelectionIndex].style.backgroundColor = '#474747';
+        document.getElementsByClassName('gridfeed')[0].childNodes[feedSelectionIndex].style.backgroundColor = selectBgColor;
     }
     else if (e.keyCode == 75) { // 'k'
         if (typeof feedSelectionIndex === 'undefined') {
@@ -190,6 +243,6 @@ document.onkeydown = function keyDown(e) {
             document.getElementsByClassName('gridfeed')[0].childNodes[feedSelectionIndex].style.backgroundColor = '';
         }
         feedSelectionIndex--;
-        document.getElementsByClassName('gridfeed')[0].childNodes[feedSelectionIndex].style.backgroundColor = '#474747';
+        document.getElementsByClassName('gridfeed')[0].childNodes[feedSelectionIndex].style.backgroundColor = selectBgColor;
     }
 }

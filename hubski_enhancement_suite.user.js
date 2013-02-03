@@ -84,6 +84,11 @@ document.onkeyup = function keyUp(e) {
     }
 
     // Feed Shortcuts
+    if (e.keyCode == 65) { // 'a'
+        if (feedSelectionIndex >= 0) {
+            location.href = 'javascript:void(vote(document.getElementById(\'grid\').childNodes[' + feedSelectionIndex + '].childNodes[0].childNodes[0]));';
+        }
+    }
     else if (e.keyCode == 83) { // 's'
         if (feedSelectionIndex >= 0) {
             window.location = document.getElementsByClassName('gridfeed')[0].childNodes[feedSelectionIndex].childNodes[1].childNodes[2].childNodes[1].childNodes[3].href;
@@ -108,7 +113,10 @@ document.onkeyup = function keyUp(e) {
 
     // Post Shortcuts
     if (window.location.href.indexOf('pub') !== -1) {
-        if (e.keyCode == 83) { // 's'
+        if (e.keyCode == 65) { // 'a'
+            location.href = 'javascript:void(vote(document.getElementsByClassName(\'sub\')[0].childNodes[0].childNodes[0]));';
+        }
+        else if (e.keyCode == 83) { // 's'
             // Save post
         }
         else if (e.keyCode == 82) { // 'r'

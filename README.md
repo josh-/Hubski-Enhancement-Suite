@@ -32,11 +32,13 @@ Check back here regularity as I release updates (currently you'll have to manual
     ### Feed Shortcuts (active when browsing post lists)
     * `j` - Select post above.
     * `k` - Scroll post below.
+    * `a` - Share/Unshare post (must have selected a post with j/k first).
     * `s` - Save post (must have selected a post with j/k first).
     * `h` - Hide post (must have selected a post with j/k first).
     * `o` or `enter` - Open post (must have selected a post with j/k first). `Shift + o` or `Shift + enter` opens the post in a new tab.
 
     ### Post Shortcuts (active when viewing a single post)
+    * `a` - Share/Unshare post.
     * `s` - Save post.
     * `r` - Reply to post.
     

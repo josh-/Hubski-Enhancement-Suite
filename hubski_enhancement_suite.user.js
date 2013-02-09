@@ -1,248 +1,163 @@
 // ==UserScript==
-// @name          Hubski Enhancement Suite
-// @namespace 	  http://joshparnham.com/
-// @description	  Several feature additions to Hubski.com
-// @copyright     Josh Parnham 2013 (http://joshparnham.com/)
+// @name          Hubski Enhancement Suite Refactor
+// @namespace     http://markbahnman.github.com
+// @description   Several feature additions to Hubski.com
 // @license       LGPL
-// @author        joshparnham
+// @author        markbahnman
 // @include       http://hubski.com/*
 // @include       https://hubski.com/*
-// @version       0.1
+// @grant         none
+// @version       0.3
 // ==/UserScript==
+console.log("Script running");
+var currentUser = $('.leftmaintitle').html();
 
-var currentUser = document.getElementsByClassName('leftmaintitle')[0].innerHTML;
-var feedSelectionIndex;
-var backgroundColorOffset = 0x111111;
+// URLs
+var feedURL = 'http://hubski.com/feed?id=';
+var notificationURL = 'http://hubski.com/notifications?id=';
+var mailboxURL = 'http://hubski.com/mail?id=';
+var composeMailURL = 'http://hubski.com/sendmail';
+var globalPostsURL = 'http://hubski.com/global?id=';
+var communityURL = 'http://hubski.com/community';
+var badgesURL = 'http://hubski.com/badgesubs';
+var submissionURL = 'http://hubski.com/submit';
+var preferencesURL = 'http://hubski.com/pref?id=';
 
-//
-// Function to get computed style of an element
-// All credit to Robert Nyman
-// http://robertnyman.com/2006/04/24/get-the-rendered-style-of-an-element/
-//
-function getStyle(oElm, strCssRule){
-    var strValue = "";
-    if(document.defaultView && document.defaultView.getComputedStyle){
-        strValue = document.defaultView.getComputedStyle(oElm, "").getPropertyValue(strCssRule);
-    }
-    else if(oElm.currentStyle){
-        strCssRule = strCssRule.replace(/\-(\w)/g, function (strMatch, p1){
-            return p1.toUpperCase();
-        });
-        strValue = oElm.currentStyle[strCssRule];
-    }
-    return strValue;
+// Conditional variables for seeing what page you're on
+var isPost = false;
+if(window.location.href.indexOf('pub') !== -1) {
+    isPost = true;
 }
+var isGlobal = false;
+if(window.location.href.indexOf('global') !== -1) {
+    isGlobal = true;
+}
+var isNotifications = false;
+if (window.location.href.indexOf('notifications') !== -1) { isNotifications = true;
+}
+console.log("isPost: " + isPost + " isGlobal: " + isGlobal + " isNotifications: " + isNotifications);
 
-//
-// Converting RGB color to hex
-// http://haacked.com/archive/2009/12/29/convert-rgb-to-hex.aspx
-//
-function colorToHex(color) {
-    if (color.substr(0, 1) === '#') {
-        return color;
-    }
-    var digits = /(.*?)rgb\((\d+), (\d+), (\d+)\)/.exec(color);
-    
-    var red = parseInt(digits[2]);
-    var green = parseInt(digits[3]);
-    var blue = parseInt(digits[4]);
-    
-    var rgb = blue | (green << 8) | (red << 16);
-    return digits[1] + '#' + rgb.toString(16);
+// Data structures
+var generalShortKeys = {
+    '66': // 'b"
+        function() { window.location = badgesURL; },
+    '67': // 'c"
+        function() { window.location = communityURL; },
+    '69': // 'e'
+        function() { window.location = composeMailURL; },
+    '70': // 'f'
+        function() { window.location = feedURL + currentUser; },
+    '71': // 'g'
+        function() { window.location = globalPostsURL + '1'; },
+    '77': // 'm'
+        function() { window.location = mailboxURL + currentUser; },
+    '78': // 'n'
+        function() { window.location = notificationURL + currentUser; },
+    '80': // 'p"
+        function() { window.location = submissionURL; },
+    '81': // 'q"
+        function() { $('.searchbox').focus(); },
+    '85': // 'u"
+        function() { window.location = preferencesURL + currentUser; }
 };
 
-//
-// Never Ending Hubski
-// 
-window.addEventListener('scroll', function() {
-    var element =  document.getElementById('iscroll');
-    if (typeof(element) != 'undefined' && element != null) {
-        if (window.innerHeight + window.scrollY == document.getElementsByClassName('pagecontent')[0].offsetHeight) {
-            if (document.getElementById('loading').style.display == 'none') {
-                document.getElementById('iscroll').click();
-            }
-        }
-    }
-},false);
+var buttonMap = {
+    '▼ ':'▶ ',
+    '▶ ': '▼ '
+};
 
-//
-// Collapsing comments
-//
-for (var i = 0; i < document.getElementsByClassName('comhead').length; i++) {
-    document.getElementsByClassName('comhead')[i].innerHTML = '<a href=\'javascript:collapse(' + i + ')\'>▼ </a>' + document.getElementsByClassName('comhead')[i].innerHTML;
-}
-var head = document.getElementsByTagName('head')[0];
-var script = document.createElement('script');
-script.type = 'text/javascript';
-script.textContent = 'function collapse(e) {if (document.getElementsByClassName(\'comhead\')[e].parentNode.parentNode.nextSibling.style.display !== \'none\') {document.getElementsByClassName(\'comhead\')[e].parentNode.parentNode.nextSibling.style.display = \'none\';document.getElementsByClassName(\'comhead\')[e].parentNode.childNodes[1].style.display = \'none\';document.getElementsByClassName(\'comhead\')[e].innerHTML = document.getElementsByClassName(\'comhead\')[e].innerHTML.replace(\'▼\', \'▶\');}else {document.getElementsByClassName(\'comhead\')[e].parentNode.parentNode.nextSibling.style.display = \'block\';document.getElementsByClassName(\'comhead\')[e].parentNode.childNodes[1].style.display = \'block\';document.getElementsByClassName(\'comhead\')[e].innerHTML = document.getElementsByClassName(\'comhead\')[e].innerHTML.replace(\'▶\', \'▼\');}} ';
-head.appendChild(script);
+var postShortKeys = {
+//    '65': // 'a'
+//        function() {},
+    '82': // 'r'
+        function() { $('[name="text"]').focus(); }
+//    '83': // 's'
+//        function() {}
+};
 
-//
-// Keyboard Shortcuts
-//
-document.onkeyup = function keyUp(e) {
-    if (e.target.tagName == 'TEXTAREA' || e.target.tagName == 'INPUT') {
-        return;
-    }
+var ShortKeys =  (function() {
+    'use strict';
+    var ShortcutModule = {
+        init: function() { 
+            console.log("Initializing ShortKeys module");
+            this.keyHandler = keyUpHandler.bind(this);
+            $(document).on('keyup',this.keyHandler);
+        },
+        teardown: function() {
+            console.log("Tearing Down ShortKeys module");
+            $(document).off('keyup',this.keyHandler);
+        }
+    };
 
-    // General Shortcuts
-    if (e.keyCode == 70) { // 'f'
-        var url = 'http://hubski.com/feed?id=';
-    window.location = url.concat(currentUser);
-    }
-    else if (e.keyCode == 78) { // 'n'
-        var url = 'http://hubski.com/notifications?id=';
-        window.location = url.concat(currentUser);
-    }
-    else if (e.keyCode == 77) { // 'm'
-        var url = 'http://hubski.com/mail?id=';
-        window.location = url.concat(currentUser);
-    }
-    else if (e.keyCode == 69) { // 'e'
-        window.location = 'http://hubski.com/sendmail';
-    }
-    else if (e.keyCode == 71) { // 'g'
-        window.location = 'http://hubski.com/global?id=1';
-    }
-    else if (e.keyCode == 67) { // 'c"
-        window.location = 'http://hubski.com/community';
-    }
-    else if (e.keyCode == 66) { // 'b"
-        window.location = 'http://hubski.com/badgesubs';
-    }
-    else if (e.keyCode == 80) { // 'p"
-        window.location = 'http://hubski.com/submit';
-    }
-    else if (e.keyCode == 81) { // 'q"
-        document.getElementsByClassName('searchbox')[0].focus();
-    }
-    else if (e.keyCode == 85) { // 'u"
-        var url = 'http://hubski.com/pref?id=';
-        window.location = url.concat(currentUser);
-    }
+    return ShortcutModule;
+    
+    function keyUpHandler(e) {
 
-    // Feed Shortcuts
-    if (e.keyCode == 65) { // 'a'
-        if (feedSelectionIndex >= 0) {
-            location.href = 'javascript:void(vote(document.getElementById(\'grid\').childNodes[' + feedSelectionIndex + '].childNodes[0].childNodes[0]));';
+        var code = e.keyCode;
+        
+        // Make sure we're not handling keystrokes from inputs or textareas
+        var tag = e.target.tagName.toLowerCase();
+        if (tag == 'textarea' || tag == 'input') {
+            return;
         }
-    }
-    else if (e.keyCode == 83) { // 's'
-        if (feedSelectionIndex >= 0) {
-            window.location = document.getElementsByClassName('gridfeed')[0].childNodes[feedSelectionIndex].childNodes[1].childNodes[2].childNodes[1].childNodes[3].href;
-        }
-    }
-    else if (e.keyCode == 72) { // 'h'
-        if (feedSelectionIndex >= 0) {
-            window.location = document.getElementsByClassName('gridfeed')[0].childNodes[feedSelectionIndex].childNodes[1].childNodes[2].childNodes[1].childNodes[1].href;
-        }
-    }
-    else if (e.shiftKey && e.keyCode == 79 || e.shiftKey && e.keyCode == 13) { // 'o or enter'
-        if (feedSelectionIndex >= 0) {
-            window.open(document.getElementsByClassName('gridfeed')[0].childNodes[feedSelectionIndex].childNodes[1].childNodes[0].childNodes[0].href, '_blank');
-    window.focus();
-        }
-    }
-    else if (e.keyCode == 79 || e.keyCode == 13) { // 'o or enter'
-        if (feedSelectionIndex >= 0) {
-            window.location = document.getElementsByClassName('gridfeed')[0].childNodes[feedSelectionIndex].childNodes[1].childNodes[0].childNodes[0].href;
-        }
-    }
 
-    // Post Shortcuts
-    if (window.location.href.indexOf('pub') !== -1) {
-        if (e.keyCode == 65) { // 'a'
-            location.href = 'javascript:void(vote(document.getElementsByClassName(\'sub\')[0].childNodes[0].childNodes[0]));';
+        // Check to see if the key is a global shortcut
+        if(code in generalShortKeys) {          
+            generalShortKeys[code]();
         }
-        else if (e.keyCode == 83) { // 's'
-            // Save post
+
+        // If we're on a individual post page, check keystroke
+        if(isPost && code in postShortKeys) {
+            postShortKeys[code]();
         }
-        else if (e.keyCode == 82) { // 'r'
-            document.getElementsByName('text')[0].focus();
+
+        if(isGlobal && code >= 49 && code <= 57) {
+            var globalNumber = code - 48;
+            window.location = globalPostsURL + globalNumber;
         }
     }
+}());
 
-    // Global Shortcuts
-    if (window.location.href.indexOf('global') !== -1) {
-        if (e.keyCode == 49) { // '1'
-            window.location = 'http://hubski.com/global?id=1';
+var CollapsingComments = (function() {
+    'use strict';
+    var CollapsingModule = {
+        init: function() {
+            console.log("Initializing CollapsingComments module");
+            insertCollapseButton();
+            
+            this.commentHandler = collapseHandler.bind(this);
+            $('[name="collapseComments"]').on('click',this.commentHandler);
+            
+        },
+        teardown: function() {
         }
-        else if (e.keyCode == 50) { // '2'
-            window.location = 'http://hubski.com/global?id=2';
-        }
-        else if (e.keyCode == 51) { // '3'
-            window.location = 'http://hubski.com/global?id=3';
-        }
-        else if (e.keyCode == 52) { // '4'
-            window.location = 'http://hubski.com/global?id=4';
-        }
-        else if (e.keyCode == 53) { // '5'
-            window.location = 'http://hubski.com/global?id=5';
-        }
-        else if (e.keyCode == 54) { // '6'
-            window.location = 'http://hubski.com/global?id=6';
-        }
-        else if (e.keyCode == 55) { // '7'
-            window.location = 'http://hubski.com/global?id=7';
-        }
-        else if (e.keyCode == 56) { // '8'
-            window.location = 'http://hubski.com/global?id=8';
-        }
-        else if (e.keyCode == 57) { // '9'
-            window.location = 'http://hubski.com/global?id=9';
-        }
+    };
+    return CollapsingModule;
+    
+    function toggleComments(node) {
+        console.log('In hideComment');
+        //var commentDiv = $(node).parents('.outercomm:first');
+        node.find('.comm,.replytrigger').toggle();
+        node.next('.subcom').toggle();
     }
-
-    // Notification Shortcuts
-    if (window.location.href.indexOf('notifications') !== -1) {
-        if (e.keyCode == 68) { // 'd'
-            // Find url to dismiss notifications
-            var urlBeginningIndex = document.getElementsByClassName('simplemenu')[0].innerHTML.indexOf('\'');
-            var urlEndingIndex = document.getElementsByClassName('simplemenu')[0].innerHTML.indexOf('\'', i+1);
-            var url = document.getElementsByClassName('simplemenu')[0].innerHTML.substring(urlBeginningIndex+1, urlEndingIndex);
-            window.location.href = url;
-        }
+    function insertCollapseButton() {
+      $('<span name="collapseComments">▼ </span>').prependTo('span.comhead');
     }
-}
-
-//
-// Calculate appropriate background color for selecting posts
-//
-var bgColorAttr = getStyle(document.getElementsByTagName('body')[0],"background-color");
-
-if(bgColorAttr=='transparent') { //edge case for the snow hubski-style
-    bgColorAttr='rgb(255, 255, 255)';
-}
-
-var originalBgColor = colorToHex(bgColorAttr);
-var parsedHexBgColor = originalBgColor.replace("#","");
-parsedHexBgColor = parseInt(parsedHexBgColor, 16);
-var selectBgColor = '#'+((parsedHexBgColor - backgroundColorOffset).toString(16));
-
-
-document.onkeydown = function keyDown(e) {
-    if (e.target.tagName == 'TEXTAREA' || e.target.tagName == 'INPUT') {
-        return;
+    function toggleButton(node) {
+        node.text(buttonMap[node.text()]);
     }
+    function collapseHandler(event) {
+        console.log('In collapseHandler');
+        var commentButton = $(event.target);
+        var commentDiv = commentButton.parents('.outercomm:first');
+        
+        toggleButton(commentButton);
+        toggleComments(commentDiv);
+    }
+}());
 
-    if (e.keyCode == 74) { // 'j'
-        if (typeof feedSelectionIndex === 'undefined') {
-            feedSelectionIndex=-1;
-        }
-        if (feedSelectionIndex >= 0) {
-            document.getElementsByClassName('gridfeed')[0].childNodes[feedSelectionIndex].style.backgroundColor = '';
-        }
-        feedSelectionIndex++;
-        document.getElementsByClassName('gridfeed')[0].childNodes[feedSelectionIndex].style.backgroundColor = selectBgColor;
-    }
-    else if (e.keyCode == 75) { // 'k'
-        if (typeof feedSelectionIndex === 'undefined') {
-            feedSelectionIndex=-1;
-        }
-        if (feedSelectionIndex >= 0) {
-            document.getElementsByClassName('gridfeed')[0].childNodes[feedSelectionIndex].style.backgroundColor = '';
-        }
-        feedSelectionIndex--;
-        document.getElementsByClassName('gridfeed')[0].childNodes[feedSelectionIndex].style.backgroundColor = selectBgColor;
-    }
-}
+//Create and initialize our module objects
+var shortcuts = Object.create(ShortKeys);
+shortcuts.init();
+var comments = Object.create(CollapsingComments);
+comments.init();

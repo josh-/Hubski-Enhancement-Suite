@@ -7,10 +7,11 @@
 // @include       http://hubski.com/*
 // @include       https://hubski.com/*
 // @grant         none
-// @version       0.3
+// @version       0.2
+// @require       https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js
 // ==/UserScript==
 console.log("Script running");
-var currentUser = $('.leftmaintitle').html();
+var currentUser = $('.topmaintitle').html();
 
 // URLs
 var feedURL = 'http://hubski.com/feed?id=';
@@ -37,49 +38,12 @@ if (window.location.href.indexOf('notifications') !== -1) { isNotifications = tr
 }
 console.log("isPost: " + isPost + " isGlobal: " + isGlobal + " isNotifications: " + isNotifications);
 
-// Data structures
-var generalShortKeys = {
-    '66': // 'b"
-        function() { window.location = badgesURL; },
-    '67': // 'c"
-        function() { window.location = communityURL; },
-    '69': // 'e'
-        function() { window.location = composeMailURL; },
-    '70': // 'f'
-        function() { window.location = feedURL + currentUser; },
-    '71': // 'g'
-        function() { window.location = globalPostsURL + '1'; },
-    '77': // 'm'
-        function() { window.location = mailboxURL + currentUser; },
-    '78': // 'n'
-        function() { window.location = notificationURL + currentUser; },
-    '80': // 'p"
-        function() { window.location = submissionURL; },
-    '81': // 'q"
-        function() { $('.searchbox').focus(); },
-    '85': // 'u"
-        function() { window.location = preferencesURL + currentUser; }
-};
-
-var buttonMap = {
-    '▼ ':'▶ ',
-    '▶ ': '▼ '
-};
-
-var postShortKeys = {
-//    '65': // 'a'
-//        function() {},
-    '82': // 'r'
-        function() { $('[name="text"]').focus(); }
-//    '83': // 's'
-//        function() {}
-};
-
 var ShortKeys =  (function() {
     'use strict';
     var ShortcutModule = {
         init: function() { 
             console.log("Initializing ShortKeys module");
+            buildKeyMap();
             this.keyHandler = keyUpHandler.bind(this);
             $(document).on('keyup',this.keyHandler);
         },
@@ -89,8 +53,61 @@ var ShortKeys =  (function() {
         }
     };
 
-    return ShortcutModule;
-    
+    var keyMap = {};
+
+    var generalShortKeys = {
+        '66': // 'b"
+            function() { window.location = badgesURL; },
+        '67': // 'c"
+            function() { window.location = communityURL; },
+        '69': // 'e'
+            function() { window.location = composeMailURL; },
+        '70': // 'f'
+            function() { window.location = feedURL + currentUser; },
+        '71': // 'g'
+            function() { window.location = globalPostsURL + '1'; },
+        '77': // 'm'
+            function() { window.location = mailboxURL + currentUser; },
+        '78': // 'n'
+            function() { window.location = notificationURL + currentUser; },
+        '80': // 'p"
+            function() { window.location = submissionURL; },
+        '81': // 'q"
+            function() { $('.searchbox').focus(); },
+        '85': // 'u"
+            function() { window.location = preferencesURL + currentUser; }
+    };
+
+    var postShortKeys = {
+    //    '65': // 'a'
+    //        function() {},
+        '82': // 'r'
+            function() { $('[name="text"]').focus(); }
+    //    '83': // 's'
+    //        function() {}
+    };
+
+    var globalShortKeys = {
+        '49': // 1
+            function() { window.location = globalPostsURL + '1'; },
+        '50': // 2
+            function() { window.location = globalPostsURL + '2'; },
+        '51': // 3
+            function() { window.location = globalPostsURL + '3'; },
+        '52': // 4
+            function() { window.location = globalPostsURL + '4'; },
+        '53': // 5
+            function() { window.location = globalPostsURL + '5'; },
+        '54': // 6
+            function() { window.location = globalPostsURL + '6'; },
+        '55': // 7
+            function() { window.location = globalPostsURL + '7'; },
+        '56': // 8
+            function() { window.location = globalPostsURL + '8'; },
+        '57': // 9
+            function() { window.location = globalPostsURL + '9'; }
+    };
+
     function keyUpHandler(e) {
 
         var code = e.keyCode;
@@ -101,21 +118,19 @@ var ShortKeys =  (function() {
             return;
         }
 
-        // Check to see if the key is a global shortcut
-        if(code in generalShortKeys) {          
-            generalShortKeys[code]();
-        }
-
-        // If we're on a individual post page, check keystroke
-        if(isPost && code in postShortKeys) {
-            postShortKeys[code]();
-        }
-
-        if(isGlobal && code >= 49 && code <= 57) {
-            var globalNumber = code - 48;
-            window.location = globalPostsURL + globalNumber;
+        if(code in keyMap) {
+            keyMap[code]();
         }
     }
+    
+    function buildKeyMap() {
+        $.extend(keyMap,generalShortKeys);
+        if(isPost) {$.extend(keyMap,postShortKeys)};
+        if(isNotifications) {$.extend(keyMap,notificationKeys)};
+        if(isGlobal) {$.extend(keyMap,globalShortKeys)};
+    }
+    
+    return ShortcutModule;
 }());
 
 var CollapsingComments = (function() {
@@ -132,20 +147,27 @@ var CollapsingComments = (function() {
         teardown: function() {
         }
     };
-    return CollapsingModule;
     
+    
+    var buttonMap = {
+        '▼ ':'▶ ',
+        '▶ ': '▼ '
+    };
+
     function toggleComments(node) {
         console.log('In hideComment');
-        //var commentDiv = $(node).parents('.outercomm:first');
         node.find('.comm,.replytrigger').toggle();
         node.next('.subcom').toggle();
     }
+
     function insertCollapseButton() {
       $('<span name="collapseComments">▼ </span>').prependTo('span.comhead');
     }
+
     function toggleButton(node) {
         node.text(buttonMap[node.text()]);
     }
+
     function collapseHandler(event) {
         console.log('In collapseHandler');
         var commentButton = $(event.target);
@@ -154,6 +176,8 @@ var CollapsingComments = (function() {
         toggleButton(commentButton);
         toggleComments(commentDiv);
     }
+
+    return CollapsingModule;
 }());
 
 //Create and initialize our module objects

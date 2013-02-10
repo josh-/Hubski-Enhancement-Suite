@@ -8,7 +8,6 @@
 // @include       https://hubski.com/*
 // @grant         none
 // @version       0.2
-// @require       https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js
 // ==/UserScript==
 console.log("Script running");
 var currentUser = $('.topmaintitle').html();
@@ -42,12 +41,15 @@ var modules = {};
 
 modules['shortcuts'] = (function() {
     'use strict';
-    var ShortcutModule = {
+    var Module = {
         init: function() { 
             console.log("Initializing ShortKeys module");
             buildKeyMap();
             this.keyHandler = keyUpHandler.bind(this);
             $(document).on('keyup',this.keyHandler);
+        },
+        isLoaded: function() {
+            return true;
         }
     };
 
@@ -114,7 +116,7 @@ modules['shortcuts'] = (function() {
                 window.location.href = dismissURL;
             }
     };
-    
+
     function keyUpHandler(e) {
 
         var code = e.keyCode;
@@ -137,19 +139,24 @@ modules['shortcuts'] = (function() {
         if(isGlobal) {$.extend(keyMap,globalShortKeys)};
     }
     
-    return ShortcutModule;
+    return Module;
 }());
 
 modules['collapsingComments'] = (function() {
     'use strict';
-    var CollapsingModule = {
+    var Module = {
         init: function() {
             console.log("Initializing CollapsingComments module");
             insertCollapseButton();
-            
             this.commentHandler = collapseHandler.bind(this);
             $('[name="collapseComments"]').on('click',this.commentHandler);
-            
+        },
+        isLoaded: function() {
+            if(isPost) {
+                return true;
+            } else {
+                return false;
+            }
         }
     };
     
@@ -182,10 +189,42 @@ modules['collapsingComments'] = (function() {
         toggleComments(commentDiv);
     }
 
-    return CollapsingModule;
+    return Module;
+}());
+
+
+modules['infiniteScroll'] = (function (){
+    var Module = {
+        init: function () {
+            this.infiniteScrollHandler = scrollHandler.bind(this);
+            $(window).on('scroll',this.infiniteScrollHandler);
+        },
+        isLoaded: function () {
+            if(!isNotifications&&!isPost) {
+                return true;
+            } else { 
+                return false;
+            }
+        }
+    };
+    
+    function scrollHandler(event) {
+        if($(window).scrollTop() == $(document).height() - $(window).height()) {
+            console.log("Checking display");
+            if($('#loading').css('display')=='none') {
+                console.log("clicking");
+                $('#iscroll').click();
+            }
+        }
+    }
+
+    return Module;
 }());
 
 for(mod in modules) {
+    
     console.log("mod = "+mod);
-    modules[mod].init();
+    if(modules[mod].isLoaded()) {
+        modules[mod].init();
+    }
 }

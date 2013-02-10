@@ -107,6 +107,14 @@ modules['shortcuts'] = (function() {
             function() { window.location = globalPostsURL + '9'; }
     };
 
+    var notificationKeys = {
+        '68': // 'd'
+            function() { 
+                var dismissURL = $('.simplemenu').find('a').attr('href');
+                window.location.href = dismissURL;
+            }
+    };
+    
     function keyUpHandler(e) {
 
         var code = e.keyCode;

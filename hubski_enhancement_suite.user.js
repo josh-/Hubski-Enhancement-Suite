@@ -38,7 +38,9 @@ if (window.location.href.indexOf('notifications') !== -1) { isNotifications = tr
 }
 console.log("isPost: " + isPost + " isGlobal: " + isGlobal + " isNotifications: " + isNotifications);
 
-var ShortKeys =  (function() {
+var modules = {};
+
+modules['shortcuts'] = (function() {
     'use strict';
     var ShortcutModule = {
         init: function() { 
@@ -46,13 +48,10 @@ var ShortKeys =  (function() {
             buildKeyMap();
             this.keyHandler = keyUpHandler.bind(this);
             $(document).on('keyup',this.keyHandler);
-        },
-        teardown: function() {
-            console.log("Tearing Down ShortKeys module");
-            $(document).off('keyup',this.keyHandler);
         }
     };
 
+    //Private members and functions
     var keyMap = {};
 
     var generalShortKeys = {
@@ -133,7 +132,7 @@ var ShortKeys =  (function() {
     return ShortcutModule;
 }());
 
-var CollapsingComments = (function() {
+modules['collapsingComments'] = (function() {
     'use strict';
     var CollapsingModule = {
         init: function() {
@@ -143,12 +142,10 @@ var CollapsingComments = (function() {
             this.commentHandler = collapseHandler.bind(this);
             $('[name="collapseComments"]').on('click',this.commentHandler);
             
-        },
-        teardown: function() {
         }
     };
     
-    
+    //Private members and functions
     var buttonMap = {
         '▼ ':'▶ ',
         '▶ ': '▼ '
@@ -180,8 +177,7 @@ var CollapsingComments = (function() {
     return CollapsingModule;
 }());
 
-//Create and initialize our module objects
-var shortcuts = Object.create(ShortKeys);
-shortcuts.init();
-var comments = Object.create(CollapsingComments);
-comments.init();
+for(mod in modules) {
+    console.log("mod = "+mod);
+    modules[mod].init();
+}

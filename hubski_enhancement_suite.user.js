@@ -7,7 +7,7 @@
 // @author        joshparnham
 // @include       http://hubski.com/*
 // @include       https://hubski.com/*
-// @version       0.1
+// @version       0.2
 // ==/UserScript==
 
 var currentUser = document.getElementsByClassName('topmaintitle')[0].innerHTML;

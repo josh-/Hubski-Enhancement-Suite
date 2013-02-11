@@ -114,7 +114,7 @@ document.onkeyup = function keyUp(e) {
         window.location = 'http://hubski.com/submit';
     }
     else if (e.keyCode == 81) { // 'q"
-        document.getElementsByClassName('searchbox')[0].focus();
+        document.getElementsByClassName('maglink')[0].click()
     }
     else if (e.keyCode == 85) { // 'u"
         var url = 'http://hubski.com/pref?id=';

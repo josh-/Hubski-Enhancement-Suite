@@ -9,6 +9,22 @@
 // @version       0.3
 // ==/UserScript==
 
+/*
+ * This function is here to provide cross-compatibility with chrome.
+ * It injects this userscript into the page so it can access jQuery.
+ *
+ * Based off the function in this blog post:
+ * http://erikvold.com/blog/index.cfm/2010/6/14/using-jquery-with-a-user-script
+ */
+function addScript(callback) {
+    window.onload = function() {
+        var script = document.createElement('script');
+        script.textContent = '(' + callback.toString() + ')();';
+        document.body.appendChild(script);
+    }
+}
+
+function main() {
 var currentUser = $('.topmaintitle').html();
 
 // URLs
@@ -320,8 +336,10 @@ modules['infiniteScroll'] = (function (){
 }());
 
 for(mod in modules) {
-    console.log("mod = "+mod);
     if(modules[mod].isLoaded()) {
         modules[mod].init();
     }
 }
+}//main
+
+addScript(main);

@@ -120,6 +120,33 @@ document.onkeyup = function keyUp(e) {
         var url = 'http://hubski.com/pref?id=';
         window.location = url.concat(currentUser);
     }
+    else if (e.keyCode == 49) { // '1'
+        window.location = 'http://hubski.com/global?id=1';
+    }
+    else if (e.keyCode == 50) { // '2'
+        window.location = 'http://hubski.com/global?id=2';
+    }
+    else if (e.keyCode == 51) { // '3'
+        window.location = 'http://hubski.com/global?id=3';
+    }
+    else if (e.keyCode == 52) { // '4'
+        window.location = 'http://hubski.com/global?id=4';
+    }
+    else if (e.keyCode == 53) { // '5'
+        window.location = 'http://hubski.com/global?id=5';
+    }
+    else if (e.keyCode == 54) { // '6'
+        window.location = 'http://hubski.com/global?id=6';
+    }
+    else if (e.keyCode == 55) { // '7'
+        window.location = 'http://hubski.com/global?id=7';
+    }
+    else if (e.keyCode == 56) { // '8'
+        window.location = 'http://hubski.com/global?id=8';
+    }
+    else if (e.keyCode == 57) { // '9'
+        window.location = 'http://hubski.com/global?id=9';
+    }
 
     // Feed Shortcuts
     if (e.keyCode == 65) { // 'a'
@@ -159,37 +186,6 @@ document.onkeyup = function keyUp(e) {
         }
         else if (e.keyCode == 82) { // 'r'
             document.getElementsByName('text')[0].focus();
-        }
-    }
-
-    // Global Shortcuts
-    if (window.location.href.indexOf('global') !== -1) {
-        if (e.keyCode == 49) { // '1'
-            window.location = 'http://hubski.com/global?id=1';
-        }
-        else if (e.keyCode == 50) { // '2'
-            window.location = 'http://hubski.com/global?id=2';
-        }
-        else if (e.keyCode == 51) { // '3'
-            window.location = 'http://hubski.com/global?id=3';
-        }
-        else if (e.keyCode == 52) { // '4'
-            window.location = 'http://hubski.com/global?id=4';
-        }
-        else if (e.keyCode == 53) { // '5'
-            window.location = 'http://hubski.com/global?id=5';
-        }
-        else if (e.keyCode == 54) { // '6'
-            window.location = 'http://hubski.com/global?id=6';
-        }
-        else if (e.keyCode == 55) { // '7'
-            window.location = 'http://hubski.com/global?id=7';
-        }
-        else if (e.keyCode == 56) { // '8'
-            window.location = 'http://hubski.com/global?id=8';
-        }
-        else if (e.keyCode == 57) { // '9'
-            window.location = 'http://hubski.com/global?id=9';
         }
     }
 

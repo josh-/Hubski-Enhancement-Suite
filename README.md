@@ -28,6 +28,7 @@ Check back here regularity as I release updates (currently you'll have to manual
     * `p` - Submit a post.
     * `q` - Search Hubski.
     * `u` - Open your user preferences.
+    * `number 1 to 9` - Display Global posts with that number of shares.
     
     ### Feed Shortcuts (active when browsing post lists)
     * `j` - Select post above.
@@ -44,9 +45,6 @@ Check back here regularity as I release updates (currently you'll have to manual
     
     ### Post Shortcuts (active when viewing an individual post)
     * `r` - Reply to post.
-    
-    ### Global Shortcuts (active when viewing the Global posts page)
-    * `number 1 to 9` - Display posts with that number of shares.
     
     ### Notification Shortcuts (active when viewing notifications)
     * `d` - Dismiss new notifications. 

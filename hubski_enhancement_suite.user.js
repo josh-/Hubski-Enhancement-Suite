@@ -80,7 +80,7 @@ modules['shortcuts'] = (function() {
         '80': // 'p"
             function() { window.location = submissionURL; },
         '81': // 'q"
-            function() { $('.searchbox').focus(); },
+            function() { $('.maglink').click(); },
         '85': // 'u"
             function() { window.location = preferencesURL + currentUser; }
     };

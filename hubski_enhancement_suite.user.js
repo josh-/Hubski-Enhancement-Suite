@@ -6,10 +6,9 @@
 // @author        markbahnman
 // @include       http://hubski.com/*
 // @include       https://hubski.com/*
-// @grant         none
-// @version       0.2
+// @version       0.3
 // ==/UserScript==
-console.log("Script running");
+
 var currentUser = $('.topmaintitle').html();
 
 // URLs
@@ -31,15 +30,14 @@ if(window.location.href.indexOf('pub') !== -1) {
 var isNotifications = false;
 if (window.location.href.indexOf('notifications') !== -1) { isNotifications = true;
 }
-console.log("isPost: " + isPost + " isNotifications: " + isNotifications);
 
+//List of modules
 var modules = {};
 
 modules['shortcuts'] = (function() {
     'use strict';
     var Module = {
         init: function() { 
-            console.log("Initializing ShortKeys module");
             feed = { currentNode:$('#grid > #unit:first'),feedIndex:-1};
 
             buildKeyMap();
@@ -53,7 +51,6 @@ modules['shortcuts'] = (function() {
         }
     };
 
-    //Private members
     var keyMap = {};
     var feed,selectColor;
     var bgColorOffset = 0x111111;
@@ -253,7 +250,6 @@ modules['collapsingComments'] = (function() {
     'use strict';
     var Module = {
         init: function() {
-            console.log("Initializing CollapsingComments module");
             insertCollapseButton();
             this.commentHandler = collapseHandler.bind(this);
             $('[name="collapseComments"]').on('click',this.commentHandler);
@@ -267,14 +263,12 @@ modules['collapsingComments'] = (function() {
         }
     };
     
-    //Private members and functions
     var buttonMap = {
         '▼ ':'▶ ',
         '▶ ': '▼ '
     };
 
     function toggleComments(node) {
-        console.log('In hideComment');
         node.find('.comm,.replytrigger').toggle();
         node.next('.subcom').toggle();
     }
@@ -288,7 +282,6 @@ modules['collapsingComments'] = (function() {
     }
 
     function collapseHandler(event) {
-        console.log('In collapseHandler');
         var commentButton = $(event.target);
         var commentDiv = commentButton.parents('.outercomm:first');
         
@@ -317,9 +310,7 @@ modules['infiniteScroll'] = (function (){
     
     function scrollHandler(event) {
         if($(window).scrollTop() == $(document).height() - $(window).height()) {
-            console.log("Checking display");
             if($('#loading').css('display')=='none') {
-                console.log("clicking");
                 $('#iscroll').click();
             }
         }

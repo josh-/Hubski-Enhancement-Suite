@@ -1,9 +1,10 @@
 // ==UserScript==
-// @name          Hubski Enhancement Suite Refactor
-// @namespace     http://markbahnman.github.com
+// @name          Hubski Enhancement Suite
+// @namespace     http://joshparnham.com/
 // @description   Several feature additions to Hubski.com
+// @copyright     Josh Parnham 2013 (http://joshparnham.com/)
 // @license       LGPL
-// @author        markbahnman
+// @author        joshparnham
 // @include       http://hubski.com/*
 // @include       https://hubski.com/*
 // @version       0.3

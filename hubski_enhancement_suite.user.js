@@ -57,7 +57,7 @@ function colorToHex(color) {
 window.addEventListener('scroll', function() {
     var element =  document.getElementById('iscroll');
     if (typeof(element) != 'undefined' && element != null) {
-        if (window.innerHeight + window.scrollY == document.getElementsByClassName('pagecontent')[0].offsetHeight) {
+        if (window.innerHeight + window.scrollY > document.getElementsByClassName('pagecontent')[0].offsetHeight) {
             if (document.getElementById('loading').style.display == 'none') {
                 document.getElementById('iscroll').click();
             }

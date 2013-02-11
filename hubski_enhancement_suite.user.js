@@ -44,7 +44,11 @@ modules['shortcuts'] = (function() {
     var Module = {
         init: function() { 
             console.log("Initializing ShortKeys module");
+            feed = { currentNode:$('#grid > #unit:first'),feedIndex:-1};
+
             buildKeyMap();
+            calcSelectColor();
+
             this.keyHandler = keyUpHandler.bind(this);
             $(document).on('keyup',this.keyHandler);
         },
@@ -53,8 +57,10 @@ modules['shortcuts'] = (function() {
         }
     };
 
-    //Private members and functions
+    //Private members
     var keyMap = {};
+    var feed,selectColor;
+    var bgColorOffset = 0x111111;
 
     var generalShortKeys = {
         '66': // 'b"
@@ -117,10 +123,126 @@ modules['shortcuts'] = (function() {
             }
     };
 
+    var feedShortKeys = {
+        '13': // 'enter'
+            function() {
+                window.location = feed.currentNode.find('.feedtitle > a').attr('href');
+            },
+        's13': // 'shift+enter'
+            function() {
+                window.open(feed.currentNode.find('.feedtitle > a').attr('href'),'_blank');
+                window.focus();
+            },
+        '65': // 'a'
+            function() {
+                if(feed.feedIndex!=-1) {
+                    feed.currentNode.find('.plusminus>a').click();
+                }
+            },
+        '72': // 'h'
+            function() {
+                if(feed.feedIndex!=-1) {
+                    feed.currentNode.find('.savesplit>a:contains("hide")');
+                }
+            },
+        '74': // 'j'
+            function () {
+                nextNode();
+            },
+        '75': // 'k'
+            function() {
+                prevNode();
+            },
+        '79': // 'o'
+            function() {
+                window.location = feed.currentNode.find('.feedtitle > a').attr('href');
+            },
+        's79': // 'shift+o'
+            function() {
+                window.open(feed.currentNode.find('.feedtitle > a').attr('href'),'_blank');
+                window.focus();
+            },
+        '83': // 's'
+            function() {
+                if(feed.feedIndex!=-1) {
+                    feed.currentNode.find('.savesplit>a:contains("save")').click();
+                }
+            }
+    };
+
+    function buildKeyMap() {
+        $.extend(keyMap,generalShortKeys);
+        if(isPost) {$.extend(keyMap,postShortKeys)};
+        if(isNotifications) {$.extend(keyMap,notificationKeys)};
+        if(isGlobal) {$.extend(keyMap,globalShortKeys)};
+        if(!isPost&&!isNotifications) {$.extend(keyMap,feedShortKeys)};
+    }
+
+    //Feed navitgation functions
+    function nextNode() {
+        if(feed.currentNode.next().is('div.box')) {
+            if(feed.feedIndex!=-1) {
+                feed.currentNode.css('background-color','');
+                feed.currentNode = feed.currentNode.next();
+            }
+            feed.currentNode.css('background-color',selectColor);
+            feed.feedIndex++;
+        }
+    }
+
+    function prevNode() {
+        if(feed.currentNode.prev().is('div.box')) {
+            feed.currentNode.css('background-color','');
+            feed.currentNode = feed.currentNode.prev();
+            feed.currentNode.css('background-color',selectColor);
+            feed.feedIndex--;
+        } else {
+            feed.currentNode.css('background-color','');
+            feed.feedIndex = -1;
+        }
+    }
+
+    //Color Determination functions
+    function calcSelectColor() {
+        var bgColorAttr = $('body').css('background-color');
+        
+        if(bgColorAttr=='transparent') { //edge case for the snow hubski-style
+            bgColorAttr='rgb(255, 255, 255)';
+        }
+        var originalBgColor = colorToHex(bgColorAttr);
+        var parsedHexBgColor = originalBgColor.replace('#','');
+        parsedHexBgColor = parseInt(parsedHexBgColor, 16);
+        selectColor = '#'+((parsedHexBgColor - bgColorOffset).toString(16));
+    }
+
+    /*
+     * Converting RGB color to hex
+     * http://haacked.com/archive/2009/12/29/convert-rgb-to-hex.aspx
+     */
+    function colorToHex(color) {
+        if (color.substr(0, 1) === '#') {
+            return color;
+        }
+        var digits = /(.*?)rgb\((\d+), (\d+), (\d+)\)/.exec(color);
+        
+        var red = parseInt(digits[2]);
+        var green = parseInt(digits[3]);
+        var blue = parseInt(digits[4]);
+        
+        var rgb = blue | (green << 8) | (red << 16);
+        return digits[1] + '#' + rgb.toString(16);
+    }
+
+    //Event handlers
     function keyUpHandler(e) {
 
         var code = e.keyCode;
-        
+        var shift = e.shiftKey;
+
+        if(shift) {
+            code = 's'+code;
+        }
+
         // Make sure we're not handling keystrokes from inputs or textareas
         var tag = e.target.tagName.toLowerCase();
         if (tag == 'textarea' || tag == 'input') {
@@ -130,13 +252,6 @@ modules['shortcuts'] = (function() {
         if(code in keyMap) {
             keyMap[code]();
         }
-    }
-    
-    function buildKeyMap() {
-        $.extend(keyMap,generalShortKeys);
-        if(isPost) {$.extend(keyMap,postShortKeys)};
-        if(isNotifications) {$.extend(keyMap,notificationKeys)};
-        if(isGlobal) {$.extend(keyMap,globalShortKeys)};
     }
     
     return Module;
@@ -222,7 +337,6 @@ modules['infiniteScroll'] = (function (){
 }());
 
 for(mod in modules) {
-    
     console.log("mod = "+mod);
     if(modules[mod].isLoaded()) {
         modules[mod].init();

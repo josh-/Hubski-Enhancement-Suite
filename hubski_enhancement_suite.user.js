@@ -28,14 +28,10 @@ var isPost = false;
 if(window.location.href.indexOf('pub') !== -1) {
     isPost = true;
 }
-var isGlobal = false;
-if(window.location.href.indexOf('global') !== -1) {
-    isGlobal = true;
-}
 var isNotifications = false;
 if (window.location.href.indexOf('notifications') !== -1) { isNotifications = true;
 }
-console.log("isPost: " + isPost + " isGlobal: " + isGlobal + " isNotifications: " + isNotifications);
+console.log("isPost: " + isPost + " isNotifications: " + isNotifications);
 
 var modules = {};
 
@@ -63,6 +59,24 @@ modules['shortcuts'] = (function() {
     var bgColorOffset = 0x111111;
 
     var generalShortKeys = {
+        '49': // 1
+            function() { window.location = globalPostsURL + '1'; },
+        '50': // 2
+            function() { window.location = globalPostsURL + '2'; },
+        '51': // 3
+            function() { window.location = globalPostsURL + '3'; },
+        '52': // 4
+            function() { window.location = globalPostsURL + '4'; },
+        '53': // 5
+            function() { window.location = globalPostsURL + '5'; },
+        '54': // 6
+            function() { window.location = globalPostsURL + '6'; },
+        '55': // 7
+            function() { window.location = globalPostsURL + '7'; },
+        '56': // 8
+            function() { window.location = globalPostsURL + '8'; },
+        '57': // 9
+            function() { window.location = globalPostsURL + '9'; },
         '66': // 'b"
             function() { window.location = badgesURL; },
         '67': // 'c"
@@ -92,27 +106,6 @@ modules['shortcuts'] = (function() {
             function() { $('[name="text"]').focus(); }
     //    '83': // 's'
     //        function() {}
-    };
-
-    var globalShortKeys = {
-        '49': // 1
-            function() { window.location = globalPostsURL + '1'; },
-        '50': // 2
-            function() { window.location = globalPostsURL + '2'; },
-        '51': // 3
-            function() { window.location = globalPostsURL + '3'; },
-        '52': // 4
-            function() { window.location = globalPostsURL + '4'; },
-        '53': // 5
-            function() { window.location = globalPostsURL + '5'; },
-        '54': // 6
-            function() { window.location = globalPostsURL + '6'; },
-        '55': // 7
-            function() { window.location = globalPostsURL + '7'; },
-        '56': // 8
-            function() { window.location = globalPostsURL + '8'; },
-        '57': // 9
-            function() { window.location = globalPostsURL + '9'; }
     };
 
     var notificationKeys = {
@@ -174,7 +167,6 @@ modules['shortcuts'] = (function() {
         $.extend(keyMap,generalShortKeys);
         if(isPost) {$.extend(keyMap,postShortKeys)};
         if(isNotifications) {$.extend(keyMap,notificationKeys)};
-        if(isGlobal) {$.extend(keyMap,globalShortKeys)};
         if(!isPost&&!isNotifications) {$.extend(keyMap,feedShortKeys)};
     }
 

@@ -10,7 +10,7 @@
 // @version       0.1
 // ==/UserScript==
 
-var currentUser = document.getElementsByClassName('leftmaintitle')[0].innerHTML;
+var currentUser = document.getElementsByClassName('topmaintitle')[0].innerHTML;
 var feedSelectionIndex;
 var backgroundColorOffset = 0x111111;
 

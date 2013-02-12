@@ -149,7 +149,7 @@ modules['shortcuts'] = (function() {
         '72': // 'h'
             function() {
                 if(feed.feedIndex!=-1) {
-                    feed.currentNode.find('.savesplit>a:contains("hide")');
+                    feed.currentNode.find('.savesplit>a:contains("hide")').click();
                 }
             },
         '74': // 'j'

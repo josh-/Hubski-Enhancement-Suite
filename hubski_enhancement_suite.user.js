@@ -114,12 +114,12 @@ modules['shortcuts'] = (function() {
     };
 
     var postShortKeys = {
-    //    '65': // 'a'
-    //        function() {},
+        '65': // 'a'
+            function() { $('.longplusminus > a').click(); },
         '82': // 'r'
-            function() { $('[name="text"]').focus(); }
-    //    '83': // 's'
-    //        function() {}
+            function() { $('[name="text"]').focus(); },
+        '83': // 's'
+            function() { $('.titlelinks > a:contains("save")').click(); }
     };
 
     var notificationKeys = {

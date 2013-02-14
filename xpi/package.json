@@ -1,0 +1,9 @@
+{
+    "name": "hes", 
+    "license": "LGPL", 
+    "author": "Mark Bahnman", 
+    "version": "0.3", 
+    "fullName": "Hubski Enhancement Suite", 
+    "id": "jid1-PqUamJblth2dDQ", 
+    "description": "An extension which adds features to hubski.com such as keyboard shortcuts and infinite scrolling"
+}

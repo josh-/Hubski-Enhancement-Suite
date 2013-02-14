@@ -7,25 +7,24 @@
 // @author        joshparnham
 // @include       http://hubski.com/*
 // @include       https://hubski.com/*
-// @version       0.2.1
+// @version       0.2.2
 // ==/UserScript==
 
-/*
- * This function is here to provide cross-compatibility with chrome.
- * It injects this userscript into the page so it can access jQuery.
- *
- * Based off the function in this blog post:
- * http://erikvold.com/blog/index.cfm/2010/6/14/using-jquery-with-a-user-script
- */
-function addScript(callback) {
-    window.onload = function() {
-        var script = document.createElement('script');
-        script.textContent = '(' + callback.toString() + ')();';
-        document.body.appendChild(script);
-    }
-}
+/*    
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
 
-function main() {
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 var currentUser = $('.topmaintitle').html();
 
 // URLs
@@ -348,6 +347,3 @@ for(mod in modules) {
         modules[mod].init();
     }
 }
-}//main
-
-addScript(main);

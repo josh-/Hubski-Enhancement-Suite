@@ -58,7 +58,34 @@ Otherwise, sane js coding practices apply and should be able to be determined fr
 
 # Installation Instructions
 
-Since the extension is currently only a user script it's kind of a pain to install, nonetheless - here are instructions for major browsers (note that I've only tested in Chrome and Opera):
+##Browser Extensions
+
+* Firefox [Install Link]
+Manual installation instructions:  
+    1. [Download the repo](https://github.com/josh-/Hubski-Enhancement-Suite/archive/master.zip) and unzip it
+    2. Copy the hes_icon64.png into the firefox folder
+    3. Copy the jquery-1.8.3.min.js and hubski_enhancement_suite.user.js files into the firefox/data folder
+    4. Install the [Add-on SDK](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/dev-guide/tutorials/installation.html)
+    5. Navigate to the firefox folder with the addon-sdk enabled
+    6. Run `cfx xpi`
+    7. Install the extension with the resulting .xpi file
+* Opera [Install Link]
+Manual installation instructions:  
+    1. [Download the repo](https://github.com/josh-/Hubski-Enhancement-Suite/archive/master.zip) and unzip it
+    2. Copy the hes_icon64.png into the opera folder
+    3. Copy the jquery-1.8.3.min.js and hubski_enhancement_suite.user.js files into the opera/includes folder
+    4. Compress all the files in the opera folder into a .zip file. (Note: Don't just zip the opera folder, the config.xml and index.html files have to be in the root directory of the zip file)
+    5. Change the extension to of the file to .oex
+    6. Drag the .oex file into the Opera browser to install
+* Chrome [Install Link]
+Manual installation instructions:  
+    1. [Download the repo](https://github.com/josh-/Hubski-Enhancement-Suite/archive/master.zip) and unzip it
+    2. Copy the hes_icon64.png, jquery-1.8.3.min.js, and hubski_enhancement_suite.user.js files into the chrome folder
+    3. In Chrome go to `chrome://extensions/`
+    4. Enable Developer Mode
+    5. Click `Load unpacked extension...` and navigate to the chrome folder, then click open to install it.
+
+If you want to just install the userscript itself instead of an extension you can follow these instructions:
 
 * Google Chrome
     1. [Download user script](https://raw.github.com/josh-/Hubski-Enhancement-Suite/master/hubski_enhancement_suite.user.js) (right click, Save Link As...)

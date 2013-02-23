@@ -45,7 +45,8 @@ if(window.location.href.indexOf('pub') !== -1) {
     isPost = true;
 }
 var isNotifications = false;
-if (window.location.href.indexOf('notifications') !== -1) { isNotifications = true;
+if (window.location.href.indexOf('notifications') !== -1) {
+    isNotifications = true;
 }
 
 //List of modules
@@ -291,7 +292,7 @@ modules['collapsingComments'] = (function() {
     }
 
     function insertCollapseButton() {
-      $('<span name="collapseComments">▼ </span>').prependTo('span.comhead');
+        $('<span name="collapseComments">▼ </span>').prependTo('span.comhead');
     }
 
     function toggleButton(node) {

@@ -245,10 +245,14 @@ modules['shortcuts'] = (function() {
 
         var code = e.keyCode;
         var shift = e.shiftKey;
+        var alt = e.altKey;
+        var ctrl = e.ctrlKey;
+        var meta = e.metaKey;
 
-        if(shift) {
-            code = 's'+code;
-        }
+        if(shift) { code = 's'+code; }
+        if(alt) { code = 'a'+code; }
+        if(ctrl) { code = 'c'+code; }
+        if(meta) { code = 'm'+code; }
 
         // Make sure we're not handling keystrokes from inputs or textareas
         var tag = e.target.tagName.toLowerCase();

@@ -194,6 +194,7 @@ modules['shortcuts'] = (function() {
             }
             feed.currentNode.css('background-color',selectColor);
             feed.feedIndex++;
+            feed.currentNode.focus();
         }
     }
 
@@ -203,6 +204,7 @@ modules['shortcuts'] = (function() {
             feed.currentNode = feed.currentNode.prev();
             feed.currentNode.css('background-color',selectColor);
             feed.feedIndex--;
+            feed.currentNode.focus();
         } else {
             feed.currentNode.css('background-color','');
             feed.feedIndex = -1;

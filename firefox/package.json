@@ -1,17 +1,7 @@
 {
     "name": "hes", 
     "license": "LGPL", 
-    "author": "Josh Parnham",
-    "contributors": [
-        {
-            "name": "Mark Bahnman",
-            "email": "mark.bahnman@gmail.com"
-        },
-        {
-            "name": "Josh Parnham",
-            "email": ""
-        }
-    ], 
+    "author": "Mark Bahnman",
     "version": "0.3", 
     "fullName": "Hubski Enhancement Suite", 
     "id": "jid1-PqUamJblth2dDQ", 

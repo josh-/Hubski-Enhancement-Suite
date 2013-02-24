@@ -2,15 +2,9 @@
 
 A simple browser extension that adds features to [Hubski](http://hubski.com), inspired by [Reddit Enhancement Suite](http://redditenhancementsuite.com/).
 
-There are many ways you can help out:
+Note that this extension is currently only a user script - when it's been tested thoroughly and become more feature complete, it'll be compile it into browser extensions for popular browsers.
 
-* Test on different browsers and [report bugs](https://github.com/josh-/Hubski-Enhancement-Suite/issues/new).
-* Submit [feature suggestions](https://github.com/josh-/Hubski-Enhancement-Suite/issues/new).
-* Contribute code of your own (or fix mine).
-
-Note that this is still very much a work in progress - I'd call it pre-alpha. Also notable is that this extension is currently only a user script - when it's been tested thoroughly and become more feature complete, I'll compile it into browser extensions for popular browsers.
-
-Check back here regularity as I release updates (currently you'll have to manually update), and I'll also be using the #[enhancement](http://hubski.com/tag?id=enhancement) tag for release notes & other relevant information - so follow that if you wish.
+Check back here regularity as updates are released (currently you'll have to manually update), and the #[enhancement](http://hubski.com/tag?id=enhancement) tag will be used for release notes & other relevant information - so follow that if you wish.
 
 # Implemented Features
 
@@ -55,7 +49,12 @@ Check back here regularity as I release updates (currently you'll have to manual
 * Live preview of markup when writing a comment or submitting a post.
 * Persistent bar for quick access to tags/users.
 * Inline image & video viewer.
-* Fix bugs & clean up code (since currently it's basically one big DOM hack).
+
+# Coding Style
+
+[@markbahnman](http://github.com/markbahnman) recently re-wrote the entire script (for which I am eternally grateful) using jQuery and the Javascript module pattern. He wrote a fantastic [blog post](http://markbahnman.github.com/2013/02/16/javascript-jquery-and-modules.html) describing this process, which is also a great reference for those wanting more information about the project's structure.
+
+Otherwise, sane js coding practices apply and should be able to be determined from the existing code.
 
 # Installation Instructions
 

@@ -174,6 +174,12 @@ modules['shortcuts'] = (function() {
                 if(feed.feedIndex!=-1) {
                     feed.currentNode.find('.savesplit>a:contains("save")').click();
                 }
+            },
+        '86': // 'v'
+            function() {
+                if(feed.feedIndex!=-1) {
+                    feed.currentNode.find('.feedcombub > a > img').click();
+                }
             }
     };
 

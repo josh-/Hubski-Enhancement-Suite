@@ -30,6 +30,7 @@ Check back here regularity as updates are released (currently you'll have to man
     * `a` - Share/Unshare post (must have selected a post with j/k first).
     * `s` - Save post (must have selected a post with j/k first).
     * `h` - Hide post (must have selected a post with j/k first).
+    * `v` - View post comments  (must have selected a post with j/k first).
     * `o` or `enter` - Open post (must have selected a post with j/k first). `Shift + o` or `Shift + enter` opens the post in a new tab.
 
     ### Post Shortcuts (active when viewing a single post)

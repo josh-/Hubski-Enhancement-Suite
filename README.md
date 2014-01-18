@@ -2,9 +2,25 @@
 
 A simple browser extension that adds features to [Hubski](http://hubski.com), inspired by [Reddit Enhancement Suite](http://redditenhancementsuite.com/).
 
-Note that this extension is currently only a user script - when it's been tested thoroughly and become more feature complete, it'll be compile it into browser extensions for popular browsers.
-
 Check back here regularity as updates are released (currently you'll have to manually update), and the #[enhancement](http://hubski.com/tag?id=enhancement) tag will be used for release notes & other relevant information - so follow that if you wish.
+
+## Installation Instructions
+
+* Firefox
+    1. [Download the .xpi](http://joshparnham.com/downloads/Hubski-Enhancement-Suite.xpi)
+    2. Open the Add-ons window
+    3. Drag `Hubski-Enhancement-Suite.xpi` onto the window
+
+* Chrome (and Opera 15+)
+    1. [Download the .crx](http://joshparnham.com/downloads/Hubski-Enhancement-Suite.crx)
+    2. Open the Extensions page (chrome://extensions)
+    3. Drag `Hubski-Enhancement-Suite.crx` onto the window
+
+* Safari
+    1. [Download the .safariextz](http://joshparnham.com/downloads/Hubski-Enhancement-Suite.safariextz)
+    2. Open the downloaded .safariextz
+
+---
 
 # Implemented Features
 
@@ -56,12 +72,13 @@ Check back here regularity as updates are released (currently you'll have to man
 
 Otherwise, sane js coding practices apply and should be able to be determined from the existing code.
 
-# Installation Instructions
+# Browser Extension Compilation
 
-##Browser Extensions
+To compile the browser extensions yourself, run the `compile.sh` script in the projects root directory (which currently only works on OS X).
 
-* Firefox [Install Link]  
-Manual installation instructions:  
+For other platforms, follow the manual instructions below:
+
+* Firefox 
     1. [Download the repo](https://github.com/josh-/Hubski-Enhancement-Suite/archive/master.zip) and unzip it
     2. Copy the hes_icon64.png into the firefox folder
     3. Copy the jquery-1.8.3.min.js and hubski_enhancement_suite.user.js files into the firefox/data folder
@@ -69,38 +86,9 @@ Manual installation instructions:
     5. Navigate to the firefox folder with the addon-sdk enabled
     6. Run `cfx xpi`
     7. Install the extension with the resulting .xpi file
-* Opera [Install Link]  
-Manual installation instructions:  
-    1. [Download the repo](https://github.com/josh-/Hubski-Enhancement-Suite/archive/master.zip) and unzip it
-    2. Copy the hes_icon64.png into the opera folder
-    3. Copy the jquery-1.8.3.min.js and hubski_enhancement_suite.user.js files into the opera/includes folder
-    4. Compress all the files in the opera folder into a .zip file. (Note: Don't just zip the opera folder, the config.xml and index.html files have to be in the root directory of the zip file)
-    5. Change the extension to of the file to .oex
-    6. Drag the .oex file into the Opera browser to install
-* Chrome [Install Link]  
-Manual installation instructions:  
+* Chrome
     1. [Download the repo](https://github.com/josh-/Hubski-Enhancement-Suite/archive/master.zip) and unzip it
     2. Copy the hes_icon64.png, jquery-1.8.3.min.js, and hubski_enhancement_suite.user.js files into the chrome folder
     3. In Chrome go to `chrome://extensions/`
     4. Enable Developer Mode
     5. Click `Load unpacked extension...` and navigate to the chrome folder, then click open to install it.
-
-If you want to just install the userscript itself instead of an extension you can follow these instructions:
-
-* Google Chrome
-    1. [Download user script](https://raw.github.com/josh-/Hubski-Enhancement-Suite/master/hubski_enhancement_suite.user.js) (right click, Save Link As...)
-    2. Open the [extensions page](chrome://extensions).
-    3. Drag the `hubski_enhancement_suite.user.js` script to the window & confirm the dialog box.
-* Firefox
-    1. Install the [Greasemonkey extension](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/).
-    2. [Download user script](https://raw.github.com/josh-/Hubski-Enhancement-Suite/master/hubski_enhancement_suite.user.js) (right click, Save Link As...)
-    3. Add the file `hubski_enhancement_suite.user.js` to Greasemonkey
-* Safari
-    1. Install the [NinjaKit extension](http://ss-o.net/safari/extension/NinjaKit.safariextz)
-    2. [Download user script](https://raw.github.com/josh-/Hubski-Enhancement-Suite/master/hubski_enhancement_suite.user.js) (right click, Save Link As...)
-    3. Add the file `hubski_enhancement_suite.user.js` to NinjaKit
-* Opera
-    1. Enable User Javascript:
-        * On Mac OS X, go to: Opera menu > Preferences > Advanced > Content > JavaScript options
-        * On UNIX and Windows, go to: O menu > Settings > Preferences > Advanced > Content > JavaScript options
-    2. Select the directory where the `hubski_enhancement_suite.user.js` is stored.

@@ -7,7 +7,7 @@
 // @author        joshparnham
 // @include       http://hubski.com/*
 // @include       https://hubski.com/*
-// @version       0.2.2
+// @version       0.3
 // ==/UserScript==
 
 /*    

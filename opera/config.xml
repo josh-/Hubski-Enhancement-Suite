@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<widget xmlns="http://www.w3.org/ns/widgets" version="0.3">
-    <name>Hubski Enhancement Suite</name>
-    <description>Adds features to hubski.com such as keyboard shortcuts and infinite scrolling.</description>
-  <author href="http://markbahnman.github.com">Mark Bahnman</author>
-  <access origin="http://hubski.com" subdomains="true" />
-  <icon src="hes_icon64.png" />
-</widget>

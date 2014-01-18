@@ -1,0 +1,10 @@
+{
+    "name": "Hubski Enhancement Suite", 
+    "license": "LGPL", 
+    "author": "HES Authors",
+    "version": "0.3", 
+    "fullName": "Hubski Enhancement Suite", 
+    "id": "jid1-PqUamJblth2dDQ", 
+    "description": "An extension which adds features to hubski.com such as keyboard shortcuts and infinite scrolling."
+    "icon": "icon.png"
+"

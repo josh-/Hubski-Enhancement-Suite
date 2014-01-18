@@ -1,0 +1,33 @@
+{
+    "name": "Hubski Enhancement Suite",
+    "version": "0.3",
+    "manifest_version": 2,
+    "minimum_chrome_version": "20.0",
+    "description": "Hubski Enhancement Suite",
+    "author": "HES Authors",
+    "homepage_url": "https://github.com/josh-/Hubski-Enhancement-Suite/",
+    "icons": {
+        "16": "icon_16.png",
+        "48": "icon_48.png",
+        "128": "icon_128.png" },
+    "content_scripts": [
+    {
+        "matches": [
+            "http://hubski.com/*",
+            "https://hubski.com/*",
+            "http://*.hubski.com/*",
+            "https://*.hubski.com/*"
+        ],
+        "js": [
+            "jquery-1.8.3.min.js",
+            "hubski_enhancement_suite.user.js"
+        ],
+        "run_at": "document_end"
+    }],
+    "permissions": [
+        "http://hubski.com/*",
+        "https://hubski.com/*",
+        "http://*.hubski.com/*",
+        "https://*.hubski.com/*"
+    ]
+}

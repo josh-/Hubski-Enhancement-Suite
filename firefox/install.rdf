@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<RDF:RDF xmlns:em="http://www.mozilla.org/2004/em-rdf#"
+         xmlns:NC="http://home.netscape.com/NC-rdf#"
+         xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <RDF:Description RDF:about="rdf:#$KeOel3"
+                   em:id="{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
+                   em:minVersion="18.0.2"
+                   em:maxVersion="18.0.2" />
+  <RDF:Description RDF:about="urn:mozilla:extension:file:"
+                   em:package="content/" />
+  <RDF:Description RDF:about="urn:mozilla:install-manifest"
+                   em:id="{c5a3e70d-5e3f-4fa0-85d0-6f9cf0d16583}"
+                   em:name="HES"
+                   em:version="0.3"
+                   em:description="Hubski Enhancement Suite">
+    <em:targetApplication RDF:resource="rdf:#$KeOel3"/>
+    <em:file RDF:resource="urn:mozilla:extension:file:"/>
+  </RDF:Description>
+</RDF:RDF>

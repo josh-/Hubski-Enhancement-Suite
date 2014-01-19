@@ -33,6 +33,7 @@ var notificationURL = 'http://hubski.com/notifications?id=';
 var mailboxURL = 'http://hubski.com/mail?id=';
 var composeMailURL = 'http://hubski.com/sendmail';
 var globalPostsURL = 'http://hubski.com/global?id=';
+var globalPostSharesURL = 'http://hubski.com/sglobal?id=';
 var communityURL = 'http://hubski.com/community';
 var badgesURL = 'http://hubski.com/badgesubs';
 var submissionURL = 'http://hubski.com/submit';
@@ -74,23 +75,23 @@ modules['shortcuts'] = (function() {
 
     var generalShortKeys = {
         '49': // 1
-            function() { window.location = globalPostsURL + '1'; },
+            function() { window.location = globalPostSharesURL + '1'; },
         '50': // 2
-            function() { window.location = globalPostsURL + '2'; },
+            function() { window.location = globalPostSharesURL + '2'; },
         '51': // 3
-            function() { window.location = globalPostsURL + '3'; },
+            function() { window.location = globalPostSharesURL + '3'; },
         '52': // 4
-            function() { window.location = globalPostsURL + '4'; },
+            function() { window.location = globalPostSharesURL + '4'; },
         '53': // 5
-            function() { window.location = globalPostsURL + '5'; },
+            function() { window.location = globalPostSharesURL + '5'; },
         '54': // 6
-            function() { window.location = globalPostsURL + '6'; },
+            function() { window.location = globalPostSharesURL + '6'; },
         '55': // 7
-            function() { window.location = globalPostsURL + '7'; },
+            function() { window.location = globalPostSharesURL + '7'; },
         '56': // 8
-            function() { window.location = globalPostsURL + '8'; },
+            function() { window.location = globalPostSharesURL + '8'; },
         '57': // 9
-            function() { window.location = globalPostsURL + '9'; },
+            function() { window.location = globalPostSharesURL + '9'; },
         '66': // 'b"
             function() { window.location = badgesURL; },
         '67': // 'c"
